@@ -9,4 +9,14 @@ router.get('/',(req,res)=>{
         if(err) throw err;
         res.send(result)
     })
+});
+router.delete('/:cid',(req,res)=>{
+    pool.query('DELETE FROM xfn_category WHERE cid=?',req.params.cid,(err,result)=>{
+        if(err)throw err;
+        if(result.affectedRows>0){
+        res.send({code:200,msg:"1 category deleted"})
+    }else{
+        res.send({code:400,msg:"0 category deleted"})
+    }
+    })
 })

@@ -14,12 +14,18 @@
     <script src="./axios.min.js"></script>
     <script>
       btn1.onclick=function(){
-          axios.get('http://127.0.0.1:8090/admin/category').then(rusult=>{
+          axios.get('http://127.0.0.1:8090/admin/category').then(result=>{
               console.log('获取菜品成功');
-              console.log(result);
+              console.log(result.data);
           }).catch(err=>{
               console.log(err)
           })
+      }
+      btn2.onclick=function(){
+          axios.delete("http://127.0.0.1:8090/admin/category/6").then(result=>{
+              console.log('删除列别执行成功')
+              console.log(result.data)
+          }).catch(err=>console.log(err));
       }
     </script>
 </body>
