@@ -38,17 +38,10 @@ router.post('/',(req,res)=>{
     })
 })
 //功能三：修改菜品
-router.put('/', (req, res)=>{
-  var data = req.body; //请求数据{cid:xx, cname:'xx'}
-  //TODO: 此处可以对数据数据进行验证
-  pool.query('UPDATE xfn_category SET ? WHERE cid=?', [data, data.cid], (err, result)=>{
-    if(err)throw err;
-    if(result.changedRows>0){  //实际修改了一行
-      res.send({code:200, msg: '1 category modified'})
-    }else if(result.affectedRows==0){  //影响到0行
-      res.send({code:400, msg:'category not exits'})
-    }else if(result.affectedRows==1 && result.changedRows==0){ //影响到1行，但修改了0行——新值与旧值完全一样
-      res.send({code:401, msg:'no category modified'})
+router.put('/',(req,res)=>{
+    var date=req.body;
+    pool.query('UPDATE xfn_category SET ? WHERE cid=?'),[data,data.cid],(err,result)=>{
+        if(err) throw err;
+        res.send({code:200,msg:"1 category updated"}) 
     }
-  })
 })

@@ -4,6 +4,7 @@ const express=require('express');
 const cors=require('cors');
 const bodyParser=require('body-parser');
 const categoryRouter=require('./routes/admin/category')
+const adminRouter=require('./routes/admin/admin')
 //启动主服务器
 var app=express();
 app.listen(PORT,()=>{
@@ -13,3 +14,4 @@ app.use(cors());
 app.use(bodyParser.json());
 //挂载路由
 app.use('/admin/category',categoryRouter);
+app.use('/admin',adminRouter)
