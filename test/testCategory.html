@@ -31,16 +31,15 @@
           var data={cname:'牛肉羊肉类'};
           axios.post('http://127.0.0.1:8090/admin/category',data).then(result=>{
              console.log('增加菜品类别成功')
-             consol.log(result.data)
+             console.log(result.data)
           }).catch(err=>console.log(err));
       }
       btn4.onclick=function(){
-          var cid=req.query.cid;
-          axios.get('http://127.0.0.1:8090/admin/category?cid'+cid).then(
-              result=>{
+          var data={cid:20,cname:'史前类'};
+          axios.put('http://127.0.0.1:8090/admin/category',data).then(result=>{
                   console.log('修改菜品成功')
                   console.log(result.data)
-              }).catch(err=>console.log(err));
+          }).catch(err=>console.log(err));
       }
     </script>
 </body>
