@@ -22,10 +22,25 @@
           })
       }
       btn2.onclick=function(){
-          axios.delete("http://127.0.0.1:8090/admin/category/6").then(result=>{
+          axios.delete("http://127.0.0.1:8090/admin/category/1").then(result=>{
               console.log('删除列别执行成功')
               console.log(result.data)
           }).catch(err=>console.log(err));
+      }
+      btn3.onclick=function(){
+          var data={cname:'牛肉羊肉类'};
+          axios.post('http://127.0.0.1:8090/admin/category',data).then(result=>{
+             console.log('增加菜品类别成功')
+             consol.log(result.data)
+          }).catch(err=>console.log(err));
+      }
+      btn4.onclick=function(){
+          var cid=req.query.cid;
+          axios.get('http://127.0.0.1:8090/admin/category?cid'+cid).then(
+              result=>{
+                  console.log('修改菜品成功')
+                  console.log(result.data)
+              }).catch(err=>console.log(err));
       }
     </script>
 </body>
