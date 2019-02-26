@@ -1,7 +1,10 @@
-const express=require('express');
-const pool=require('../../pool');
-var router=express.Router();
-module.exports=router;
+/*
+*菜品相关路由 
+*/
+const express = require('express');
+const pool = require('../../pool');
+var router = express.Router();
+module.exports = router;
 
 /*
 *GET  /admin/dish  
@@ -14,28 +17,28 @@ module.exports=router;
 * ]
 */
 router.get('/', (req, res)=>{
-    //为了获得所有菜品，必须先查询菜品类别
-    pool.query('SELECT cid,cname FROM xfn_category ORDER BY cid', (err, result)=>{
-      if(err)throw err;
-      //循环遍历每个菜品类别，查询该类别下有哪些菜品
-      var categoryList = result;    //类别列表
-      var finishCount = 0; //已经查询完菜品的类别的数量
-      //for(var c of categoryList){
-      for(let c of categoryList){
-        pool.query('SELECT * FROM xfn_dish WHERE categoryId=? ORDER BY did DESC', c.cid, (err, result)=>{
-          if(err)throw err;
-          c.dishList = result;
-          finishCount++;
-          //必须保证所有的类别下的菜品都查询完成才能发送响应消息——这些查询都是异步执行的
-          if(finishCount==categoryList.length){
-            res.send(categoryList);
-          }
-        })
-      } 
-    })
+  //为了获得所有菜品，必须先查询菜品类别
+  pool.query('SELECT cid,cname FROM xfn_category ORDER BY cid', (err, result)=>{
+    if(err)throw err;
+    //循环遍历每个菜品类别，查询该类别下有哪些菜品
+    var categoryList = result;    //类别列表
+    var finishCount = 0; //已经查询完菜品的类别的数量
+    //for(var c of categoryList){
+    for(let c of categoryList){
+      pool.query('SELECT * FROM xfn_dish WHERE categoryId=? ORDER BY did DESC', c.cid, (err, result)=>{
+        if(err)throw err;
+        c.dishList = result;
+        finishCount++;
+        //必须保证所有的类别下的菜品都查询完成才能发送响应消息——这些查询都是异步执行的
+        if(finishCount==categoryList.length){
+          res.send(categoryList);
+        }
+      })
+    } 
   })
-  
-  /*
+})
+
+/*
 *POST /admin/dish/image
 *请求参数：
 *接收客户端上传的菜品图片，保存在服务器上，返回该图片在服务器上的随机文件名
@@ -48,7 +51,6 @@ const fs = require('fs');
 var upload = multer({
   dest: 'tmp/' //指定客户端上传的文件临时存储路径
 })
-
 //定义路由，使用文件上传中间件
 router.post('/image', upload.single('dishImg'), (req, res)=>{
   //console.log(req.file); //客户端上传的文件
